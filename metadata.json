@@ -1,0 +1,6 @@
+{
+  "name": "Ivory Dental Clinic",
+  "description": "An elegant, ready-to-publish website for Ivory Dental Clinic featuring seamless booking, custom smile assessment, and premium clinical branding.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
