@@ -33,7 +33,7 @@ export default function Contact() {
     setNotification(null);
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/dddc714929026666821fef31552e95fb', {
+      const response = await fetch('https://formsubmit.co/ajax/7da870836eeb5ed99477f029da58eaf3', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
