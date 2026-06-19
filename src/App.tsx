@@ -15,6 +15,7 @@ import AboutAndTeam from './components/AboutAndTeam.tsx';
 import Reviews from './components/Reviews.tsx';
 import Contact from './components/Contact.tsx';
 import Footer from './components/Footer.tsx';
+import AdminPanel from './components/AdminPanel.tsx';
 
 export default function App() {
   const [activeTab, setActiveTab] = React.useState<string>('home');
@@ -397,6 +398,11 @@ export default function App() {
             {/* CONTACT VIEW CONTROLLER */}
             {activeTab === 'contact' && (
               <Contact />
+            )}
+
+            {/* ADMIN STAFF PANEL VIEW CONTROLLER */}
+            {activeTab === 'admin' && (
+              <AdminPanel />
             )}
 
           </motion.div>

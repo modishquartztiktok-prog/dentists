@@ -27,14 +27,30 @@ export default function BookingPortal({ preSelectedServiceId, clearPreSelection 
 
   // Load appointments saved historically on mount
   React.useEffect(() => {
-    const saved = localStorage.getItem('ivory_dental_bookings');
-    if (saved) {
+    const fetchBookings = async () => {
       try {
-        setAppointments(JSON.parse(saved));
+        const res = await fetch('/api/bookings');
+        if (res.ok) {
+          const apiBookings = await res.json();
+          setAppointments(apiBookings);
+          localStorage.setItem('ivory_dental_bookings', JSON.stringify(apiBookings));
+          return;
+        }
       } catch (err) {
-        console.error('Failed to parse saved appointments', err);
+        console.error('Failed fetching bookings from server, sliding to localStorage fallback:', err);
       }
-    }
+      
+      const saved = localStorage.getItem('ivory_dental_bookings');
+      if (saved) {
+        try {
+          setAppointments(JSON.parse(saved));
+        } catch (err) {
+          console.error('Failed to parse saved appointments', err);
+        }
+      }
+    };
+
+    fetchBookings();
   }, []);
 
   // Update form if pre-selected service triggers from outer modules
@@ -50,7 +66,7 @@ export default function BookingPortal({ preSelectedServiceId, clearPreSelection 
     localStorage.setItem('ivory_dental_bookings', JSON.stringify(list));
   };
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
+  const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!patientName || !patientEmail || !patientPhone || !date || !timeSlot) {
@@ -88,8 +104,33 @@ export default function BookingPortal({ preSelectedServiceId, clearPreSelection 
       timestamp: Date.now()
     };
 
-    const updated = [newBooking, ...appointments];
-    saveAppointments(updated);
+    // Attempt back-end sync
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newBooking)
+      });
+
+      if (response.ok) {
+        const validatedBooking = await response.json();
+        const updated = [validatedBooking, ...appointments];
+        saveAppointments(updated);
+      } else {
+        const errData = await response.json();
+        setNotification({
+          text: errData.error || 'The system could not reserve your suite coordinates.',
+          type: 'refused'
+        });
+        return;
+      }
+    } catch (err) {
+      console.warn('Backend server unreachable during reservation, saving locally:', err);
+      const updated = [newBooking, ...appointments];
+      saveAppointments(updated);
+    }
     
     // Clear inputs
     setPatientName('');
@@ -107,9 +148,20 @@ export default function BookingPortal({ preSelectedServiceId, clearPreSelection 
     setTimeout(() => setNotification(null), 7000);
   };
 
-  const handleCancelBooking = (id: string) => {
-    const updated = appointments.filter((app) => app.id !== id);
-    saveAppointments(updated);
+  const handleCancelBooking = async (id: string) => {
+    try {
+      const res = await fetch(`/api/bookings/${id}`, {
+        method: 'DELETE'
+      });
+      if (res.ok) {
+        const updated = appointments.filter((app) => app.id !== id);
+        saveAppointments(updated);
+      }
+    } catch (err) {
+      console.warn('Backend cancel failed, updating locally:', err);
+      const updated = appointments.filter((app) => app.id !== id);
+      saveAppointments(updated);
+    }
   };
 
   return (

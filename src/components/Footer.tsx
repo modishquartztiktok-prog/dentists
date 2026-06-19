@@ -174,6 +174,14 @@ export default function Footer({ onNavigateTab, onBookClick }: FooterProps) {
             <span className="hover:text-white cursor-pointer">Privacy Treaty</span>
             <span>|</span>
             <span className="hover:text-white cursor-pointer">HIPAA Disclosures</span>
+            <span>|</span>
+            <button 
+              onClick={() => onNavigateTab('admin')}
+              id="link-footer-staff-portal"
+              className="hover:text-white font-semibold cursor-pointer underline decoration-[#8D775F] underline-offset-4"
+            >
+              Staff Portal
+            </button>
           </div>
         </div>
       </div>

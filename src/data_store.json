@@ -1,0 +1,65 @@
+{
+  "bookings": [
+    {
+      "id": "bk-artisan-1",
+      "patientName": "Eleanor Sterling",
+      "patientEmail": "eleanor@sterling.com",
+      "patientPhone": "+1 (310) 555-5201",
+      "serviceId": "porcelain-veneers",
+      "dentistId": "dr-amelia-thorne",
+      "date": "2026-06-22",
+      "timeSlot": "10:30 AM",
+      "note": "Referred by Beverly Hills suite, looking for a full natural reconstruction overlay. Confirmed thermal sensitivity.",
+      "status": "confirmed",
+      "timestamp": 1781896800000
+    },
+    {
+      "id": "bk-artisan-2",
+      "patientName": "Julian Croft",
+      "patientEmail": "jcroft@architectural.io",
+      "patientPhone": "+1 (212) 555-9018",
+      "serviceId": "dental-implants",
+      "dentistId": "dr-marcus-vance",
+      "date": "2026-06-25",
+      "timeSlot": "01:30 PM",
+      "note": "Immediate tooth replacement evaluation needed. Patient prefer organic tea options during visit.",
+      "status": "pending",
+      "timestamp": 1782156600000
+    },
+    {
+      "id": "bk-artisan-3",
+      "patientName": "Sasha Montgomery",
+      "patientEmail": "sasha.mont@luxurytravel.com",
+      "patientPhone": "+1 (310) 555-4422",
+      "serviceId": "laser-whitening",
+      "dentistId": "dr-amelia-thorne",
+      "date": "2026-06-26",
+      "timeSlot": "03:00 PM",
+      "note": "Zoom Whitening prior to wedding weekend. Requesting noise-canceling headphones for audio comfort.",
+      "status": "confirmed",
+      "timestamp": 1782243600000
+    }
+  ],
+  "contacts": [
+    {
+      "id": "con-1",
+      "name": "Margot Laurent",
+      "email": "margot@laurent-couture.com",
+      "phone": "+1 (310) 555-9388",
+      "message": "Hello, I wanted to schedule a detailed 3D digital mockup before initiating any clinical preps for veneers. Do you provide digital mockups in the first session?",
+      "date": "2026-06-18",
+      "status": "unread",
+      "timestamp": 1781894400000
+    },
+    {
+      "id": "con-2",
+      "name": "Harrison Forde",
+      "email": "hforde@vanderbilt.net",
+      "phone": "+1 (212) 555-0988",
+      "message": "Hello Ivory Clinic! I have extreme sensitivity due to metal crowns. Do you provide all-porcelain or zirconia options that are 100% metal-free?",
+      "date": "2026-06-17",
+      "status": "contacted",
+      "timestamp": 1781808000000
+    }
+  ]
+}

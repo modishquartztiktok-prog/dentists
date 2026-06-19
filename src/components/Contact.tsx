@@ -33,6 +33,7 @@ export default function Contact() {
     setNotification(null);
 
     try {
+      // 1. Submit message to FormSubmit.co for outbound email notification
       const response = await fetch('https://formsubmit.co/ajax/7da870836eeb5ed99477f029da58eaf3', {
         method: 'POST',
         headers: {
@@ -48,6 +49,25 @@ export default function Contact() {
           _captcha: 'false'
         })
       });
+
+      // 2. Dual-write to our custom backend datastore so it lives inside the Admin Panel
+      try {
+        await fetch('/api/contacts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            phone,
+            message,
+            date: new Date().toISOString().split('T')[0]
+          })
+        });
+      } catch (backendErr) {
+        console.error('Core backend datastore unreachable, proceeding with client workflow', backendErr);
+      }
 
       if (response.ok) {
         setNotification('Transmission receipted! Our private concierge will reach out to you within the next 2 hours.');
