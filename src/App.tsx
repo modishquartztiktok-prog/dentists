@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, Calendar, ArrowRight, ShieldCheck, PhoneCall, Gift, CheckCircle, HelpCircle } from 'lucide-react';
+import { Sparkles, Calendar, ArrowRight, ShieldCheck, PhoneCall, Gift, CheckCircle, HelpCircle, MessageCircle, Phone } from 'lucide-react';
 
 // Data and Types
 import { SERVICES, DENTISTS } from './data.ts';
@@ -19,6 +19,7 @@ import Footer from './components/Footer.tsx';
 export default function App() {
   const [activeTab, setActiveTab] = React.useState<string>('home');
   const [preSelectedServiceId, setPreSelectedServiceId] = React.useState<string>('');
+  const [showConcierge, setShowConcierge] = React.useState(false);
 
   // Handle pre-filled selections coming from outer buttons
   const handlePreFillBooking = (serviceId: string) => {
@@ -52,18 +53,88 @@ export default function App() {
         </button>
       </div>
 
-      {/* Floating Call Assistance Widget */}
-      <div className="fixed bottom-6 right-6 z-40 hidden md:block">
-        <a 
-          href="tel:+13105555201" 
-          className="bg-[#8D775F] hover:bg-[#0E2E28] text-white p-4 rounded-full shadow-lg flex items-center justify-center group transition-all duration-300 hover:scale-105"
-          title="Direct Consultation Line"
+      {/* Floating Concierge Assistant Widget with WhatsApp & Call */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-3">
+        {/* Expanded menu */}
+        <AnimatePresence>
+          {showConcierge && (
+            <motion.div
+              initial={{ opacity: 0, y: 15, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 15, scale: 0.9 }}
+              transition={{ duration: 0.2 }}
+              className="bg-[#0E2E28] border border-stone-850/80 text-white rounded-lg p-4 shadow-2xl w-64 text-left space-y-3 mr-1"
+              id="concierge-popup-panel"
+            >
+              <div className="border-b border-stone-800 pb-2.5">
+                <span className="block text-[9px] tracking-widest font-mono text-[#8D775F] uppercase font-bold">
+                  Ivory Dental Concierge
+                </span>
+                <span className="block text-xs text-stone-300 font-serif mt-0.5">
+                  How may we elevate your coordinates?
+                </span>
+              </div>
+              
+              <div className="space-y-2">
+                <a
+                  href="https://wa.me/923341854356"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-3 bg-[#25D366] hover:bg-[#128C7E] text-white p-2.5 rounded-sm transition-all duration-300 shadow-sm"
+                  id="link-whatsapp-chat"
+                >
+                  <MessageCircle className="w-4 h-4 shrink-0" />
+                  <div className="text-left">
+                    <span className="block text-[11px] font-bold tracking-wide uppercase font-mono">WhatsApp Chat</span>
+                    <span className="block text-[10px] text-white/90">0334 1854356</span>
+                  </div>
+                </a>
+
+                <a
+                  href="tel:03341854356"
+                  className="flex items-center space-x-3 bg-[#8D775F] hover:bg-[#725F4B] text-white p-2.5 rounded-sm transition-all duration-300 shadow-sm"
+                  id="link-voice-call"
+                >
+                  <Phone className="w-4 h-4 shrink-0" />
+                  <div className="text-left">
+                    <span className="block text-[11px] font-bold tracking-wide uppercase font-mono">Call Clinic</span>
+                    <span className="block text-[10px] text-white/90">0334 1854356</span>
+                  </div>
+                </a>
+              </div>
+
+              <div className="text-[9px] font-mono text-stone-400 text-center pt-1 border-t border-stone-800/80 flex items-center justify-center space-x-1">
+                <ShieldCheck className="w-3 h-3 text-[#8D775F]" />
+                <span>Encrypted secure channel</span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Floating Toggle Button */}
+        <button
+          onClick={() => setShowConcierge(!showConcierge)}
+          className={`h-14 w-14 rounded-full shadow-2xl flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-105 relative outline-none border ${
+            showConcierge 
+              ? 'bg-[#0E2E28] border-stone-800 text-[#8D775F]' 
+              : 'bg-[#25D366] border-emerald-400 text-white hover:bg-[#128C7E]'
+          }`}
+          title="Connect with Ivory Concierge"
+          id="btn-concierge-toggle"
         >
-          <PhoneCall className="w-5 h-5 animate-pulse group-hover:rotate-12 transition-transform" />
-          <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-3 text-xs tracking-widest uppercase font-mono font-bold transition-all duration-300 whitespace-nowrap">
-            (310) 555-5201
-          </span>
-        </a>
+          {showConcierge ? (
+            <span className="text-lg font-mono font-bold leading-none">×</span>
+          ) : (
+            <>
+              {/* WhatsApp Pulsing Notification Dot */}
+              <span className="absolute top-0 right-0 flex h-3.5 w-3.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-red-500 text-[8px] font-mono text-white items-center justify-center font-bold">1</span>
+              </span>
+              <MessageCircle className="w-6 h-6 animate-pulse" />
+            </>
+          )}
+        </button>
       </div>
 
       {/* Main Nav header */}
