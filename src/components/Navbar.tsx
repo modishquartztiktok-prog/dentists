@@ -15,7 +15,8 @@ export default function Navbar({ activeTab, setActiveTab, openBooking }: NavbarP
     { id: 'services', label: 'Services' },
     { id: 'smile-architect', label: 'Smile Architect', icon: Sparkles },
     { id: 'team', label: 'Our Specialists' },
-    { id: 'reviews', label: 'Client Diaries' }
+    { id: 'reviews', label: 'Client Diaries' },
+    { id: 'contact', label: 'Contact' }
   ];
 
   return (

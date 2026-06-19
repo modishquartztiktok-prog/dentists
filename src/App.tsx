@@ -13,6 +13,7 @@ import SmileArchitect from './components/SmileArchitect.tsx';
 import BookingPortal from './components/BookingPortal.tsx';
 import AboutAndTeam from './components/AboutAndTeam.tsx';
 import Reviews from './components/Reviews.tsx';
+import Contact from './components/Contact.tsx';
 import Footer from './components/Footer.tsx';
 
 export default function App() {
@@ -320,6 +321,11 @@ export default function App() {
                 preSelectedServiceId={preSelectedServiceId} 
                 clearPreSelection={clearPreSelection} 
               />
+            )}
+
+            {/* CONTACT VIEW CONTROLLER */}
+            {activeTab === 'contact' && (
+              <Contact />
             )}
 
           </motion.div>

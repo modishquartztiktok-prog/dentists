@@ -129,6 +129,15 @@ export default function Footer({ onNavigateTab, onBookClick }: FooterProps) {
                   Client Diaries
                 </button>
               </li>
+              <li>
+                <button 
+                  onClick={() => onNavigateTab('contact')}
+                  id="footer-lnk-contact"
+                  className="text-stone-300 hover:text-white cursor-pointer transition-colors"
+                >
+                  Contact Us
+                </button>
+              </li>
               <li className="pt-2">
                 <button 
                   onClick={onBookClick}
